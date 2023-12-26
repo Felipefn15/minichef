@@ -3,8 +3,9 @@ process.env.TAMAGUI_TARGET = "native"; // Don't forget to specify your TAMAGUI_T
 module.exports = function (api) {
   api.cache(true);
   return {
-    presets: ["babel-preset-expo"],
+    presets: ["babel-preset-expo", "module:metro-react-native-babel-preset"],
     plugins: [
+      ["module:react-native-dotenv"],
       [
         "transform-inline-environment-variables",
         // NOTE: include is optional, you can leave this part out
