@@ -65,5 +65,8 @@
     "node": "18.17.0",
     "yarn": "3.6.1"
   },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "private": true
 }
