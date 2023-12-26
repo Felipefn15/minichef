@@ -23,25 +23,32 @@ export default function RecipeCard({ recipe }: RecipeCardInterface) {
       br="$2"
       bw={1}
       bc="#afb1fa"
+      gap={15}
     >
       <XStack
         ai="center"
         jc="space-between"
         w="90%"
+        gap={5}
       >
         <H3>{recipe.name}</H3>
-        <XStack
-          ai="center"
-          gap={5}
-        >
-          <Clock />
+        <Stack ai="center">
+          <XStack
+            ai="center"
+            gap={5}
+          >
+            <Clock size={15} />
+            <Text>Time to prepare</Text>
+          </XStack>
+
           <Text>{recipe.timeToPrepare} minutes</Text>
-        </XStack>
+        </Stack>
       </XStack>
-      <Stack
-        ai="center"
+      <XStack
+        ai="flex-start"
+        jc="space-between"
         w="80%"
-        gap={5}
+        gap={15}
       >
         {/* <Stack ai="flex-start">
           <H5>Ingredient</H5>
@@ -55,15 +62,20 @@ export default function RecipeCard({ recipe }: RecipeCardInterface) {
           </Stack>
         </Stack> */}
         <Stack ai="center">
-          <SmilePlus />
-          <H5>Quantity of a portion</H5>
+          <XStack
+            ai="center"
+            gap={5}
+          >
+            <SmilePlus size={15} />
+            <Text>Quantity of a portion</Text>
+          </XStack>
           <Text>{recipe.quantityOfAPortion}</Text>
         </Stack>
         <Stack ai="center">
-          <H5>Difficulty</H5>
+          <Text>Difficulty</Text>
           <Text>{recipe.difficulty}</Text>
         </Stack>
-      </Stack>
+      </XStack>
     </Stack>
   );
 }
