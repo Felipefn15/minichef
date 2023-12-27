@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Clock, SendHorizontal } from "@tamagui/lucide-icons";
-import { useRouter } from "expo-router";
 import {
   Button,
   H3,
@@ -18,7 +17,6 @@ import RecipeCard from "../../components/RecipeCard";
 import { generateResponse } from "../../service/ai";
 
 export default function Search() {
-  const router = useRouter();
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const handleSearch = async () => {
@@ -33,6 +31,7 @@ export default function Search() {
       ...prev,
       { role: "system", content: "Sure, here some suggestions:" }
     ]);
+    if (!botResponse) return;
     console.log({ botResponse });
     const parsedBotResponse = JSON.parse(botResponse);
     console.log({ parsedBotResponse });

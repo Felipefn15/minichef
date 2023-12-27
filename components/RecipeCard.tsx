@@ -1,12 +1,13 @@
 import { Clock, SmilePlus } from "@tamagui/lucide-icons";
+import { useRouter } from "expo-router";
 import { Button, H3, H5, Stack, Text, XStack } from "tamagui";
 
 interface RecipeCardInterface {
   recipe: {
     name: string;
-    timeToPrepare: number;
+    time_to_prepare: number;
     difficulty: number;
-    quantityOfAPortion: number;
+    quantity_of_a_portion: number;
     ingredients: {
       name: string;
     }[];
@@ -14,24 +15,33 @@ interface RecipeCardInterface {
 }
 
 export default function RecipeCard({ recipe }: RecipeCardInterface) {
+  const router = useRouter();
   return (
-    <Stack
+    <Button
       w="100%"
+      h={125}
+      fd="column"
       ai="center"
       bg="#dedfff"
       p="$2"
       br="$2"
       bw={1}
       bc="#afb1fa"
-      gap={15}
+      gap={5}
+      onPress={() =>
+        router.push({
+          pathname: "/recipe",
+          params: { recipe: JSON.stringify(recipe) }
+        })
+      }
     >
+      <H3>{recipe.name}</H3>
       <XStack
-        ai="center"
-        jc="space-between"
-        w="90%"
-        gap={5}
+        ai="flex-start"
+        jc="space-around"
+        w="100%"
+        gap={15}
       >
-        <H3>{recipe.name}</H3>
         <Stack ai="center">
           <XStack
             ai="center"
@@ -40,42 +50,13 @@ export default function RecipeCard({ recipe }: RecipeCardInterface) {
             <Clock size={15} />
             <Text>Time to prepare</Text>
           </XStack>
-
-          <Text>{recipe.timeToPrepare} minutes</Text>
-        </Stack>
-      </XStack>
-      <XStack
-        ai="flex-start"
-        jc="space-between"
-        w="80%"
-        gap={15}
-      >
-        {/* <Stack ai="flex-start">
-          <H5>Ingredient</H5>
-          <Stack
-            w="100%"
-            ai="flex-start"
-          >
-            {recipe.ingredients?.map((ingredient, index) => {
-              return <Text key={index}>- {ingredient.name}</Text>;
-            })}
-          </Stack>
-        </Stack> */}
-        <Stack ai="center">
-          <XStack
-            ai="center"
-            gap={5}
-          >
-            <SmilePlus size={15} />
-            <Text>Quantity of a portion</Text>
-          </XStack>
-          <Text>{recipe.quantityOfAPortion}</Text>
+          <Text>{recipe.time_to_prepare} min</Text>
         </Stack>
         <Stack ai="center">
           <Text>Difficulty</Text>
           <Text>{recipe.difficulty}</Text>
         </Stack>
       </XStack>
-    </Stack>
+    </Button>
   );
 }

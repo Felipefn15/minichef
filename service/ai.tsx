@@ -7,7 +7,6 @@ interface messageInterface {
   role: string;
   content: string;
 }
-
 const instance = axios.create({
   baseURL: "https://api.openai.com/v1/chat/completions",
   headers: {
@@ -25,29 +24,25 @@ export const generateResponse = async (messages: messageInterface) => {
       : NativeModules.I18nManager.localeIdentifier; // Android
   const defaultContext: messageInterface[] = [
     {
-      role: "assistant",
-      content: "Hello, I'm your personal cookbook. How can I help you?"
-    },
-    {
       role: "user",
-      content: `I need 5 recipes
-      Please follow the struction example:
-      Interface Recipe{
-        Name:string
-        Ingredients:{
-        Name:string
-        }
-        Preparation(Step by step):{
-        Step:string
-        }
-        Time to prepare: number
-        Difficulty: number // 1 to 10
-        Quantity of a portion: number
-      }
-      By default, all the users will have salt, pepper, oil and water.
-      answer nedd to be in ${deviceLanguage}
-      Return as a JSON recipes: Recipes[]
-      You can not break this structure
+      content: `
+      Due the next message find TWO RECIPES that make sense.
+      The result MUST contain at TWO OPTIONS. Besides that the answers MUST be a JSON that satisfies the following Typescript interface and contains TWO RECIPES OPTIONS. 
+      YOU MUST SEND ONLY THE JSON NON FORMATTTED TO BE PRESENTED ON A CHAT:
+      recipes: {
+        name: string // The name of the recipe
+        description: string // The description of the recipe, nothing more than 200 characters, need to have the quantity of portions
+        time_to_prepare: number;
+        difficulty: number;
+        ingredients: {
+          name: string // The name of the ingredient
+          amount: number // The amount of the ingredient
+          unit: string // The unit of the ingredient
+        }[]
+      }[]
+      DON'T FORGET TO SEND THE JSON NON FORMATTTED TO BE PRESENTED ON A CHAT 
+      NOTHING MORE THAN THAT
+      The answer must be in ${deviceLanguage} language.
       `
     }
   ];
