@@ -12,7 +12,6 @@ Minichef is a project that integrates with ChatGPT to function as a cookbook. Us
 - [Usage](#usage)
   - [ChatGPT Integration](#chatgpt-integration)
   - [SQLite Database](#sqlite-database)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
