@@ -35,6 +35,7 @@ export default function Recipe() {
         jc="center"
         bbw={1}
         p={10}
+        pt={20}
         bg="#dedfff"
       >
         <Button
