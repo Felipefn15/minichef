@@ -12,6 +12,7 @@ import {
 
 import { MyStack } from "../../components/MyStack";
 import RecipeCard from "../../components/RecipeCard";
+import { useDatabase } from "../../hooks/useDatabase";
 import { IRecipe } from "../../interfaces";
 import { generateResponse } from "../../service/ai";
 
@@ -19,6 +20,8 @@ export default function Search() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { saveRecipes } = useDatabase();
+
   const handleSearch = async () => {
     if (!input) return;
     setMessages((prev) => [...prev, { role: "user", content: input }]);
@@ -35,6 +38,7 @@ export default function Search() {
       ]);
       if (!botResponse) return;
       const parsedBotResponse = JSON.parse(botResponse);
+      await saveRecipes(parsedBotResponse?.recipes);
       parsedBotResponse?.recipes.forEach((recipe: IRecipe) => {
         setMessages((prev) => [
           ...prev,

@@ -1,18 +1,18 @@
 import * as SQLite from "expo-sqlite";
 
-import { IngredientInRecipe } from "../models";
+import { IIngredientInRecipe } from "../../interfaces";
 
 const table = "ingredient_in_recipe";
 const db = SQLite.openDatabase("miniChefDB.db");
 
 export default class IngredientInRecipeService {
-  static addData(param: IngredientInRecipe) {
+  static addData(param: IIngredientInRecipe) {
     return new Promise((resolve, reject) =>
       db.transaction(
         (tx) => {
           tx.executeSql(
             `insert into ${table} (ingredient_id, recipe_id) 
-                values (?)`,
+                values (?,?)`,
             [param.ingredientId, param.recipeId],
             (_, { insertId, rows }) => {
               console.log("id insert: " + insertId);

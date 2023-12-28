@@ -19,16 +19,6 @@ export default function Layout() {
               />
             );
           }
-          // headerLeft() {
-          //   return (
-          //     <Button
-          //       ml="$2.5"
-          //       onPress={() => router.push("/")}
-          //     >
-          //       <MaterialCommunityIcons name="arrow-left" />
-          //     </Button>
-          //   );
-          // }
         }}
       />
       <Tabs.Screen
@@ -43,16 +33,6 @@ export default function Layout() {
               />
             );
           }
-          // headerLeft() {
-          //   return (
-          //     <Button
-          //       ml="$2.5"
-          //       onPress={() => router.push("/")}
-          //     >
-          //       <MaterialCommunityIcons name="arrow-left" />
-          //     </Button>
-          //   );
-          // }
         }}
       />
     </Tabs>

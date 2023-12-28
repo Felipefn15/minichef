@@ -11,28 +11,28 @@ export default class DatabaseInit {
   }
   private InitDb() {
     const sql = [
-      `DROP TABLE IF EXISTS recipe;`,
-      `DROP TABLE IF EXISTS ingredient;`,
       `DROP TABLE IF EXISTS ingredient_in_recipe;`,
       `DROP TABLE IF EXISTS preparation;`,
+      `DROP TABLE IF EXISTS recipe;`,
+      `DROP TABLE IF EXISTS ingredient;`,
 
       `create table if not exists recipe (
             id integer primary key autoincrement,
             name text,
             description text,
-            duration text,
+            duration text
             );`,
       `create table if not exists ingredient (
             id integer primary key autoincrement,
             name text,
             amount int,
-            unit text,
+            unit text
             );`,
       `create table if not exists ingredient_in_recipe (
             id integer primary key autoincrement,
             recipe_id int,
             ingredient_id int,
-            foreign key (recipe_id) references recipe (id)
+            foreign key (recipe_id) references recipe (id),
             foreign key (ingredient_id) references ingredient (id)
             );`,
       `create table if not exists preparation (
