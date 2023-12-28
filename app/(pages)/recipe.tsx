@@ -15,19 +15,18 @@ import {
 
 import Checklist from "../../components/Checklist";
 import { MyStack } from "../../components/MyStack";
-import { IIngredient } from "../../interfaces";
+import { IIngredient, IPreparation, IRecipe } from "../../interfaces";
 
 export default function Recipe() {
   const router = useRouter();
   const glob = useGlobalSearchParams();
-  const recipe = JSON.parse(glob?.recipe);
+  const recipe: IRecipe = JSON.parse(glob?.recipe);
   const [checklist, setChecklist] = useState<number[]>([]);
   const handleChecklist = (position: number) => {
     if (checklist.indexOf(position) === -1)
       setChecklist((prev) => [...prev, position]);
     else setChecklist((prev) => prev.filter((item) => item !== position));
   };
-  console.log({ recipe });
   return (
     <>
       <XStack
@@ -47,17 +46,26 @@ export default function Recipe() {
           <ArrowLeft size={20} />
         </Button>
         <Text
-          fontSize={17}
-          fontWeight={500}
+          fontSize={16}
+          fontWeight={600}
         >
-          {recipe.name}
+          {recipe.name.length > 40
+            ? `${recipe.name.slice(0, 40)}...`
+            : recipe.name}
         </Text>
       </XStack>
-      <MyStack>
-        <Text>{recipe.description}</Text>
+      <MyStack jc="flex-start">
+        <Text
+          fontSize={14}
+          fontWeight={500}
+          mt={10}
+          textAlign="center"
+        >
+          {recipe.description}
+        </Text>
         <ScrollView
           space="$4"
-          mah="88%"
+          mah="100%"
         >
           <Stack
             ai="flex-start"
@@ -65,11 +73,7 @@ export default function Recipe() {
             p={10}
           >
             <H5>Ingredients</H5>
-            <Stack
-              w="100%"
-              ai="flex-start"
-              p={10}
-            >
+            <Stack w="100%">
               {recipe.ingredients?.map(
                 (ingredient: IIngredient, index: number) => {
                   return (
@@ -90,25 +94,19 @@ export default function Recipe() {
             bw={1}
             p={10}
           >
-            <H5>Ingredients</H5>
-            <Stack
-              w="100%"
-              ai="flex-start"
-              p={10}
-            >
-              {recipe.ingredients?.map(
-                (ingredient: IIngredient, index: number) => {
-                  return (
-                    <Checklist
-                      item={`${ingredient.name} : ${ingredient.amount}`}
-                      key={index}
-                      position={index}
-                      handleChecklist={handleChecklist}
-                      list={checklist}
-                    />
-                  );
-                }
-              )}
+            <H5>Preparation</H5>
+            <Stack w="100%">
+              {recipe.preparation?.map((step: IPreparation, index: number) => {
+                return (
+                  <Checklist
+                    item={step.description}
+                    key={index}
+                    position={index}
+                    handleChecklist={handleChecklist}
+                    list={checklist}
+                  />
+                );
+              })}
             </Stack>
           </Stack>
         </ScrollView>

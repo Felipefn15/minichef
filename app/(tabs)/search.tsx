@@ -1,33 +1,51 @@
 import { useState } from "react";
 import { SendHorizontal } from "@tamagui/lucide-icons";
-import { Button, ScrollView, Stack, TextArea, XStack, YStack } from "tamagui";
+import {
+  Button,
+  ScrollView,
+  Spinner,
+  Stack,
+  TextArea,
+  XStack,
+  YStack
+} from "tamagui";
 
 import { MyStack } from "../../components/MyStack";
 import RecipeCard from "../../components/RecipeCard";
+import { IRecipe } from "../../interfaces";
 import { generateResponse } from "../../service/ai";
 
 export default function Search() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const handleSearch = async () => {
     if (!input) return;
     setMessages((prev) => [...prev, { role: "user", content: input }]);
     setInput("");
-    const botResponse = await generateResponse({
-      role: "user",
-      content: input
-    });
-    setMessages((prev) => [
-      ...prev,
-      { role: "system", content: "Sure, here some suggestions:" }
-    ]);
-    if (!botResponse) return;
-    console.log({ botResponse });
-    const parsedBotResponse = JSON.parse(botResponse);
-    console.log({ parsedBotResponse });
-    parsedBotResponse?.recipes.forEach((recipe) => {
-      setMessages((prev) => [...prev, { role: "assistant", content: recipe }]);
-    });
+    setIsLoading(true);
+    try {
+      const botResponse = await generateResponse({
+        role: "user",
+        content: input
+      });
+      setMessages((prev) => [
+        ...prev,
+        { role: "system", content: "Sure, here some suggestions:" }
+      ]);
+      if (!botResponse) return;
+      const parsedBotResponse = JSON.parse(botResponse);
+      parsedBotResponse?.recipes.forEach((recipe: IRecipe) => {
+        setMessages((prev) => [
+          ...prev,
+          { role: "assistant", content: recipe }
+        ]);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const renderMessages = () => {
@@ -66,28 +84,32 @@ export default function Search() {
       >
         <YStack space="$4">{renderMessages()}</YStack>
       </ScrollView>
-      <XStack
-        display="flex"
-        pos="absolute"
-        ai="center"
-        w="100%"
-        bottom={10}
-        l={10}
-        gap="$2"
-      >
-        <TextArea
-          w="80%"
-          mah={140}
-          value={input}
-          onChangeText={(text) => setInput(text)}
-        />
-        <Button
-          onPress={() => handleSearch()}
-          variant="outlined"
+      {isLoading ? (
+        <Spinner size="large" />
+      ) : (
+        <XStack
+          display="flex"
+          pos="absolute"
+          ai="center"
+          w="100%"
+          bottom={10}
+          l={10}
+          gap="$2"
         >
-          <SendHorizontal />
-        </Button>
-      </XStack>
+          <TextArea
+            w="80%"
+            mah={140}
+            value={input}
+            onChangeText={(text) => setInput(text)}
+          />
+          <Button
+            onPress={() => handleSearch()}
+            variant="outlined"
+          >
+            <SendHorizontal />
+          </Button>
+        </XStack>
+      )}
     </MyStack>
   );
 }

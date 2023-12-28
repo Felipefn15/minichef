@@ -1,6 +1,6 @@
 import { Clock } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
-import { Button, H3, Stack, Text, XStack } from "tamagui";
+import { Button, H4, Stack, Text, XStack } from "tamagui";
 
 import { IRecipe } from "../interfaces";
 
@@ -13,7 +13,7 @@ export default function RecipeCard({ recipe }: RecipeCardInterface) {
   return (
     <Button
       w="100%"
-      h={125}
+      h="auto"
       fd="column"
       ai="center"
       bg="#dedfff"
@@ -21,7 +21,6 @@ export default function RecipeCard({ recipe }: RecipeCardInterface) {
       br="$2"
       bw={1}
       bc="#afb1fa"
-      gap={5}
       onPress={() =>
         router.push({
           pathname: "/recipe",
@@ -29,28 +28,23 @@ export default function RecipeCard({ recipe }: RecipeCardInterface) {
         })
       }
     >
-      <H3>{recipe.name}</H3>
-      <XStack
-        ai="flex-start"
-        jc="space-around"
-        w="100%"
-        gap={15}
+      <H4>{recipe.name}</H4>
+      <Text
+        fontSize={14}
+        fontWeight={500}
       >
-        <Stack ai="center">
-          <XStack
-            ai="center"
-            gap={5}
-          >
-            <Clock size={15} />
-            <Text>Time to prepare</Text>
-          </XStack>
-          <Text>{recipe.time_to_prepare} min</Text>
-        </Stack>
-        <Stack ai="center">
-          <Text>Difficulty</Text>
-          <Text>{recipe.difficulty}</Text>
-        </Stack>
-      </XStack>
+        {recipe.description}
+      </Text>
+      <Stack ai="center">
+        <XStack
+          ai="center"
+          gap={5}
+        >
+          <Clock size={15} />
+          <Text>Time to prepare</Text>
+        </XStack>
+        <Text>{recipe.duration} min</Text>
+      </Stack>
     </Button>
   );
 }

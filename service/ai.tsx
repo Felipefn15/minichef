@@ -16,7 +16,6 @@ const instance = axios.create({
 });
 
 export const generateResponse = async (messages: messageInterface) => {
-  console.log("Start AI PROCESS", { messages });
   // Get device language
   const deviceLanguage =
     Platform.OS === "ios"
@@ -26,26 +25,26 @@ export const generateResponse = async (messages: messageInterface) => {
     {
       role: "user",
       content: `
-      Due the next message find TWO RECIPES that make sense.
-      The result MUST contain at TWO OPTIONS. Besides that the answers MUST be a JSON that satisfies the following Typescript interface and contains TWO RECIPES OPTIONS. 
       YOU MUST SEND ONLY THE JSON NON FORMATTTED TO BE PRESENTED ON A CHAT:
       recipes: {
         name: string // The name of the recipe
         description: string // The description of the recipe, nothing more than 200 characters, need to have the quantity of portions
-        time_to_prepare: number;
-        prepation: {
-          step: number;
-          description: string;
-        }[];
+        duration: number;
         ingredients: {
           name: string // The name of the ingredient
           amount: number // The amount of the ingredient
           unit: string // The unit of the ingredient
         }[]
+        prepation: {
+          step: number;
+          description: string;
+        }[];
       }[]
+      Due the next message find TWO RECIPES that make sense.
+      The result MUST contain at TWO OPTIONS. Besides that the answers MUST be a JSON that satisfies the following Typescript interface and contains TWO RECIPES OPTIONS. 
+      The answer must be in ${deviceLanguage} language.
       DON'T FORGET TO SEND THE JSON NON FORMATTTED TO BE PRESENTED ON A CHAT 
       NOTHING MORE THAN THAT
-      The answer must be in ${deviceLanguage} language.
       `
     }
   ];
