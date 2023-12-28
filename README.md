@@ -1,43 +1,76 @@
-# Tamagui Expo Template
-###### This is a community template
+# Minichef
 
-<p align="center">
-  <img src="./assets/icon.png" alt="Tamagui Icon"/>
-</p>
+Minichef is a project that integrates with ChatGPT to function as a cookbook. Users can send a message, and Minichef will respond with five recipes. Additionally, the project includes functionality to store this data in an SQLite database.
 
-<div align="center">
-  <a target="_blank" href="https://expo.dev/%40ivopr/TET?serviceType=classic&distribution=expo-go&releaseChannel=default">
-      <img src="https://img.shields.io/badge/Open%20in%20Expo%20Go-4630EB.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000" alt="Open in Expo Go"/>
-    </a>
-</div>
+## Table of Contents
 
-## Quick Start
-Just run the following, changing `yourappname` to the name of your project.
-```
-npx create-expo-app yourappname -t tamagui-expo-template --no-install
-cd yourappname
-yarn install
-```
-If you have [Expo Go](https://expo.dev/client) app installed, just start your new app with `yarn start`, if not, create your own [Development Client](https://docs.expo.dev/development/build/)
+- [Overview](#overview)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [ChatGPT Integration](#chatgpt-integration)
+  - [SQLite Database](#sqlite-database)
+- [Contributing](#contributing)
+- [License](#license)
 
-## What you get
-This is a starter template for [Expo](https://expo.dev) using [Tamagui](https://tamagui.dev).
-In this template you get out of the box:
-- Semantic Release already configured with everything you might want
-- Expo Router up and running
-- Tamagui, a nice and modern way of building your UIs
-- ESLint and Prettier configurations
+## Overview
 
-## What you don't get
-- Expo Web support (for this, go to the [Official Tamagui Starter](https://github.com/tamagui/tamagui))
-- i18n
-- Global State management
+Minichef is designed to provide users with quick and diverse recipe suggestions based on their input. Leveraging the power of ChatGPT, users can send a message, and Minichef will generate and return five recipes.
 
-## If you want to...
-1. You can build your own dev client with `eas build -p android --profile development`
-1. Develop in WSL, use the `yarn wsl` command, else `yarn start` is your default choice.
+## Features
 
-## Troubleshooting
-### I'm on WSL but my app doesn't connect
-WSL2 runs inside its own container, so it doesn't share the same IPv4 and port status as your host machine, you might need [this](https://gist.github.com/ivopr/64f974e632b7edcbe1f5e58b91e31598)
+- **ChatGPT Integration**: Seamless integration with ChatGPT for recipe suggestions.
+- **Recipe Storage**: Capability to store recipe data in an SQLite database.
 
+## Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have the following prerequisites installed:
+
+- Node.js
+- npm (Node Package Manager)
+- yarn
+- SQLite
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/minichef.git
+   cd minichef
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   yarn add
+   ```
+
+3. Install dependencies:
+
+    - Obtain a ChatGPT API key from OpenAI.
+    - Set up your environment variables:
+
+        ```bash
+        export OPENAI_API_KEY=your-api-key
+        ```
+
+4. Start the Minichef server:
+
+    ```bash
+    npm start
+    ```
+
+### SQLite Database
+
+To enable SQLite database storage, ensure you have SQLite installed. Minichef will automatically create a database file (minichef.db) on startup.
+
+To customize the database configuration, modify the config.js file.
+
+### License
+
+This project is licensed under the MIT License.
