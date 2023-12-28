@@ -9,6 +9,14 @@
     },
     "icon": "./assets/icon.png",
     "name": "minichef",
-    "slug": "minichef"
+    "slug": "minichef",
+    "extra": {
+      "eas": {
+        "projectId": "5b7a298d-b2e7-407f-b909-d58b506327d6"
+      }
+    },
+    "android": {
+      "package": "com.felipefn15.minichef"
+    }
   }
 }

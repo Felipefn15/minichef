@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Check } from "@tamagui/lucide-icons";
-import { Button, Checkbox, Text, XStack, YStack } from "tamagui";
+import { Button, Checkbox, Stack, Text, XStack, YStack } from "tamagui";
 
 interface ChecklistInterface {
   item: string;
@@ -17,25 +17,30 @@ export default function Checklist({
 }: ChecklistInterface) {
   const [checked, setChecked] = useState(list.indexOf(position) !== -1);
   return (
-    <YStack
-      mb={5}
-      pr={30}
-      width="100%"
+    <Button
+      ai="center"
+      jc="flex-end"
+      variant="outlined"
+      h="auto"
+      gap={1}
+      onPress={() => {
+        handleChecklist(position);
+        setChecked(!checked);
+      }}
     >
-      <Button
+      <Stack
+        dsp="flex"
+        fd="row"
+        w="100%"
         ai="center"
-        jc="flex-start"
-        width="100%"
-        variant="outlined"
-        gap={1}
-        onPress={() => {
-          handleChecklist(position);
-          setChecked(!checked);
-        }}
+        gap={8}
       >
         <Checkbox
-          size="$4"
           checked={checked}
+          onPress={() => {
+            handleChecklist(position);
+            setChecked(!checked);
+          }}
         >
           <Checkbox.Indicator>
             <Check />
@@ -44,7 +49,7 @@ export default function Checklist({
         <Text textDecorationLine={checked ? "line-through" : "none"}>
           {item}
         </Text>
-      </Button>
-    </YStack>
+      </Stack>
+    </Button>
   );
 }

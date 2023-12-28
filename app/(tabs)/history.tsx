@@ -38,7 +38,10 @@ export default function History() {
           space="$4"
           mah="100%"
         >
-          <YStack space="$4">
+          <YStack
+            gap="$4"
+            p={8}
+          >
             {recipes?.map((recipe: IRecipe, index: number) => (
               <RecipeCard
                 key={index}

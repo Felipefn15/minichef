@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { ArrowLeft } from "@tamagui/lucide-icons";
+import { ArrowLeft, ChevronDown } from "@tamagui/lucide-icons";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import {
+  Accordion,
   Button,
   H2,
   H3,
   H4,
   H5,
+  Paragraph,
   ScrollView,
+  Square,
   Stack,
   Text,
   XStack
@@ -27,6 +30,52 @@ export default function Recipe() {
       setChecklist((prev) => [...prev, position]);
     else setChecklist((prev) => prev.filter((item) => item !== position));
   };
+
+  const AccordionItem = ({ title, content }) => {
+    return (
+      <Accordion.Item
+        value={title}
+        bw={1}
+      >
+        <Accordion.Trigger
+          flexDirection="row"
+          justifyContent="space-between"
+          bg="#dedfff"
+        >
+          {({ open }) => (
+            <>
+              <Paragraph>{title}</Paragraph>
+              <Square
+                animation="quick"
+                rotate={open ? "180deg" : "0deg"}
+              >
+                <ChevronDown size="$1" />
+              </Square>
+            </>
+          )}
+        </Accordion.Trigger>
+        <Accordion.Content
+          gap={5}
+          bg="#dedfff"
+          dsp="flex"
+          fd="column"
+        >
+          {content?.map((item: string, index: number) => {
+            return (
+              <Checklist
+                item={item}
+                key={index}
+                position={index}
+                handleChecklist={handleChecklist}
+                list={checklist}
+              />
+            );
+          })}
+        </Accordion.Content>
+      </Accordion.Item>
+    );
+  };
+
   return (
     <>
       <XStack
@@ -34,6 +83,7 @@ export default function Recipe() {
         ai="center"
         jc="center"
         bbw={1}
+        btw={1}
         p={10}
         pt={20}
         bg="#dedfff"
@@ -68,48 +118,24 @@ export default function Recipe() {
           space="$4"
           mah="100%"
         >
-          <Stack
-            ai="flex-start"
-            bw={1}
-            p={10}
+          <Accordion
+            overflow="hidden"
+            type="multiple"
+            gap={10}
           >
-            <H5>Ingredients</H5>
-            <Stack w="100%">
-              {recipe.ingredients?.map(
-                (ingredient: IIngredient, index: number) => {
-                  return (
-                    <Checklist
-                      item={`${ingredient.name} : ${ingredient.amount}`}
-                      key={index}
-                      position={index}
-                      handleChecklist={handleChecklist}
-                      list={checklist}
-                    />
-                  );
-                }
-              )}
-            </Stack>
-          </Stack>
-          <Stack
-            ai="flex-start"
-            bw={1}
-            p={10}
-          >
-            <H5>Preparation</H5>
-            <Stack w="100%">
-              {recipe.preparation?.map((step: IPreparation, index: number) => {
-                return (
-                  <Checklist
-                    item={step.description}
-                    key={index}
-                    position={index}
-                    handleChecklist={handleChecklist}
-                    list={checklist}
-                  />
-                );
-              })}
-            </Stack>
-          </Stack>
+            {AccordionItem({
+              title: "Ingredients",
+              content: recipe.ingredients.map((item: IIngredient) => {
+                return `${item.name} : ${item.amount}`;
+              })
+            })}
+            {AccordionItem({
+              title: "Preparation",
+              content: recipe.preparation.map((item: IPreparation) => {
+                return item.description;
+              })
+            })}
+          </Accordion>
         </ScrollView>
       </MyStack>
     </>
