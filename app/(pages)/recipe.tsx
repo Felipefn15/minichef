@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ArrowLeft } from "@tamagui/lucide-icons";
 import { useGlobalSearchParams, useRouter } from "expo-router";
 import {
@@ -12,20 +13,30 @@ import {
   XStack
 } from "tamagui";
 
+import Checklist from "../../components/Checklist";
 import { MyStack } from "../../components/MyStack";
+import { IIngredient } from "../../interfaces";
 
 export default function Recipe() {
   const router = useRouter();
   const glob = useGlobalSearchParams();
   const recipe = JSON.parse(glob?.recipe);
+  const [checklist, setChecklist] = useState<number[]>([]);
+  const handleChecklist = (position: number) => {
+    if (checklist.indexOf(position) === -1)
+      setChecklist((prev) => [...prev, position]);
+    else setChecklist((prev) => prev.filter((item) => item !== position));
+  };
+  console.log({ recipe });
   return (
-    <MyStack>
+    <>
       <XStack
         w="100%"
         ai="center"
         jc="center"
         bbw={1}
         p={10}
+        bg="#dedfff"
       >
         <Button
           onPress={() => router.back()}
@@ -42,29 +53,66 @@ export default function Recipe() {
           {recipe.name}
         </Text>
       </XStack>
-
-      <ScrollView
-        space="$4"
-        mah="88%"
-      >
-        <Stack ai="flex-start">
-          <H5>Ingredient</H5>
+      <MyStack>
+        <Text>{recipe.description}</Text>
+        <ScrollView
+          space="$4"
+          mah="88%"
+        >
           <Stack
-            w="100%"
             ai="flex-start"
+            bw={1}
+            p={10}
           >
-            {recipe.ingredients?.map((ingredient, index) => {
-              return (
-                <Stack key={index}>
-                  <Text key={index}>
-                    - {ingredient.name} : {ingredient.amount} {ingredient.unit}
-                  </Text>
-                </Stack>
-              );
-            })}
+            <H5>Ingredients</H5>
+            <Stack
+              w="100%"
+              ai="flex-start"
+              p={10}
+            >
+              {recipe.ingredients?.map(
+                (ingredient: IIngredient, index: number) => {
+                  return (
+                    <Checklist
+                      item={`${ingredient.name} : ${ingredient.amount}`}
+                      key={index}
+                      position={index}
+                      handleChecklist={handleChecklist}
+                      list={checklist}
+                    />
+                  );
+                }
+              )}
+            </Stack>
           </Stack>
-        </Stack>
-      </ScrollView>
-    </MyStack>
+          <Stack
+            ai="flex-start"
+            bw={1}
+            p={10}
+          >
+            <H5>Ingredients</H5>
+            <Stack
+              w="100%"
+              ai="flex-start"
+              p={10}
+            >
+              {recipe.ingredients?.map(
+                (ingredient: IIngredient, index: number) => {
+                  return (
+                    <Checklist
+                      item={`${ingredient.name} : ${ingredient.amount}`}
+                      key={index}
+                      position={index}
+                      handleChecklist={handleChecklist}
+                      list={checklist}
+                    />
+                  );
+                }
+              )}
+            </Stack>
+          </Stack>
+        </ScrollView>
+      </MyStack>
+    </>
   );
 }

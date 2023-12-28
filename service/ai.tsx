@@ -33,7 +33,10 @@ export const generateResponse = async (messages: messageInterface) => {
         name: string // The name of the recipe
         description: string // The description of the recipe, nothing more than 200 characters, need to have the quantity of portions
         time_to_prepare: number;
-        difficulty: number;
+        prepation: {
+          step: number;
+          description: string;
+        }[];
         ingredients: {
           name: string // The name of the ingredient
           amount: number // The amount of the ingredient

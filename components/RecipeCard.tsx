@@ -1,17 +1,11 @@
-import { Clock, SmilePlus } from "@tamagui/lucide-icons";
+import { Clock } from "@tamagui/lucide-icons";
 import { useRouter } from "expo-router";
-import { Button, H3, H5, Stack, Text, XStack } from "tamagui";
+import { Button, H3, Stack, Text, XStack } from "tamagui";
+
+import { IRecipe } from "../interfaces";
 
 interface RecipeCardInterface {
-  recipe: {
-    name: string;
-    time_to_prepare: number;
-    difficulty: number;
-    quantity_of_a_portion: number;
-    ingredients: {
-      name: string;
-    }[];
-  };
+  recipe: IRecipe;
 }
 
 export default function RecipeCard({ recipe }: RecipeCardInterface) {

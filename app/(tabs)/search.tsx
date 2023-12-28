@@ -1,16 +1,6 @@
 import { useState } from "react";
-import { Clock, SendHorizontal } from "@tamagui/lucide-icons";
-import {
-  Button,
-  H3,
-  H5,
-  ScrollView,
-  Stack,
-  Text,
-  TextArea,
-  XStack,
-  YStack
-} from "tamagui";
+import { SendHorizontal } from "@tamagui/lucide-icons";
+import { Button, ScrollView, Stack, TextArea, XStack, YStack } from "tamagui";
 
 import { MyStack } from "../../components/MyStack";
 import RecipeCard from "../../components/RecipeCard";
